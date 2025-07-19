@@ -4,6 +4,12 @@ import (
 	"fmt"
 )
 
+// struct
+type Person struct {
+	Name string
+	Age  string
+}
+
 func main() {
 	//variables
 	var name string = "Kapil"
@@ -106,6 +112,26 @@ func main() {
 
 	fmt.Println(capitalCities)
 
+	// Structs
+	person := Person{Name: "Kapil", Age: "65"}
+
+	fmt.Printf("The Person: %+v\n", person)
+
+	// anonymus struct
+	atrist := struct {
+		name string
+		id   int
+	}{
+		name: "Atrayee",
+		id:   1,
+	}
+
+	fmt.Printf("The atrist: %+v\n", atrist)
+
+	fmt.Println("name before:", person.Name)
+	person.modifyPersonName("Kapilraj Baraskar")
+	fmt.Println("name after:", person.Name)
+
 }
 
 func add(a int, b int) int {
@@ -114,4 +140,9 @@ func add(a int, b int) int {
 
 func addandsubstract(a, b int) (int, int) {
 	return a + b, a - b
+}
+
+func (p *Person) modifyPersonName(name string) {
+	p.Name = name
+	fmt.Println("inside scooe: name:", p.Name)
 }
