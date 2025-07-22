@@ -9,6 +9,7 @@ import (
 
 	"github.com/KapilBD/fmProject/internal/api"
 	"github.com/KapilBD/fmProject/internal/store"
+	"github.com/KapilBD/fmProject/migrations"
 )
 
 type Application struct {
@@ -18,14 +19,19 @@ type Application struct {
 }
 
 func NewApplication() (*Application, error) {
-	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime)
 
 	//stores
 	pgDB, err := store.Open()
 	if err != nil {
 		return nil, err
 	}
+	err = store.MigrationFS(pgDB, migrations.FS, ".")
 
+	if err != nil {
+		panic(err)
+	}
+
+	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime)
 	//handlers
 	workoutHandler := api.NewWorkoutHandler()
 
