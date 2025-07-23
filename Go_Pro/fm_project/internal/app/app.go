@@ -26,7 +26,6 @@ func NewApplication() (*Application, error) {
 		return nil, err
 	}
 	err = store.MigrationFS(pgDB, migrations.FS, ".")
-
 	if err != nil {
 		panic(err)
 	}
