@@ -44,8 +44,8 @@ func (pg *PosgresWorkoutStore) CreateWorkout(workout *Workout) (*Workout, error)
 
 	query :=
 		`
-	INSERT INTO workouts (user_id, title, description, duration_minutes, calories_burned)
-  	VALUES ($1, $2, $3, $4, $5)
+	INSERT INTO workouts (title, description, duration_minutes, calories_burned)
+  	VALUES ($1, $2, $3, $4)
   	RETURNING id
 	`
 
@@ -65,6 +65,7 @@ func (pg *PosgresWorkoutStore) CreateWorkout(workout *Workout) (*Workout, error)
 		}
 	}
 
+	err = tx.Commit()
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +73,7 @@ func (pg *PosgresWorkoutStore) CreateWorkout(workout *Workout) (*Workout, error)
 	return workout, nil
 }
 
-func (pg *PosgresWorkoutStore) GetWorkoutByID(id int) (*Workout, error) {
+func (pg *PosgresWorkoutStore) GetWorkoutByID(id int64) (*Workout, error) {
 	workout := &Workout{}
 	return workout, nil
 }
